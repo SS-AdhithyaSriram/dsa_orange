@@ -15,12 +15,6 @@ typedef struct HashNode {
     struct HashNode* next;
 } HashNode;
 
-typedef struct CartItem {
-    int product_id;
-    int quantity;
-    struct CartItem* next;
-} CartItem;
-
 // Function declarations
 int hash(int id);
 void insert_product(Product* p);

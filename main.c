@@ -7,7 +7,7 @@
 int main() {
     init_hash_table();
 
-    // Create some products
+    // product list
     Product* p1 = (Product*)malloc(sizeof(Product));
     p1->id = 1;
     strcpy(p1->name, "Apple");
@@ -29,28 +29,85 @@ int main() {
     p3->stock = 50;
     insert_product(p3);
 
-    // Test search
-    Product* found = search_by_id(1);
-    if (found) printf("Found by ID: %s\n", found->name);
+    int choice;
+    while (1) {
+        printf("\n________Shopping_Cart_Menu_______|\n");
+        printf("1. Add to Cart                   |\n");
+        printf("2. Remove from Cart              |\n");
+        printf("3. Update Quantity               |\n");
+        printf("4. Sort by Price (Low to High)   |\n");
+        printf("5. Sort by Name (A-Z)            |\n");
+        printf("6. Sort by Quantity (High to Low)|\n");
+        printf("7. Display Cart                  |\n");
+        printf("8. Exit                          |\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
 
-    found = search_by_name("Banana");
-    if (found) printf("Found by name: %d\n", found->id);
+        switch (choice) {
+            case 1: {
+                int id, qty;
+                printf("Enter Product ID: ");
+                scanf("%d", &id);
+                printf("Enter Quantity: ");
+                scanf("%d", &qty);
+                add_to_cart(id, qty);
+                display_cart();
+                break;
+            }
+            case 2: {
+                int id, qty;
+                printf("Enter Product ID: ");
+                scanf("%d", &id);
+                printf("Enter Quantity to Remove: ");
+                scanf("%d", &qty);
+                remove_from_cart(id, qty);
+                display_cart();
+                break;
+            }
+            case 3: {
+                int id, qty;
+                printf("Enter Product ID: ");
+                scanf("%d", &id);
+                printf("Enter New Quantity: ");
+                scanf("%d", &qty);
+                update_cart_quantity(id, qty);
+                display_cart();
+                break;
+            }
+            case 4: {
+                sort_cart_by_price();
+                printf("Cart sorted by price.\n");
+                display_cart();
+                break;
+            }
+            case 5: {
+                sort_cart_by_name();
+                printf("Cart sorted by name.\n");
+                display_cart();
+                break;
+            }
+            case 6: {
+                sort_cart_by_quantity();
+                printf("Cart sorted by quantity.\n");
+                display_cart();
+                break;
+            }
+            case 7: {
+                display_cart();
+                break;
+            }
+            case 8: {
+                printf("Exiting...\n");
+                goto cleanup;
+            }
+            default: {
+                printf("Invalid choice. Please try again.\n");
+                break;
+            }
+        }
+    }
 
-    // Test add to cart
-    add_to_cart(1, 2);
-    add_to_cart(2, 3);
-    add_to_cart(3, 40); // Add more for discount
-    add_to_cart(1, 1); // Add more to existing
-
-    // Display cart
-    display_cart();
-
-    // Remove from cart
-    remove_from_cart(1, 1);
-
-    // Display again
-    display_cart();
-
+cleanup:
     // Cleanup
     cleanup();
 
